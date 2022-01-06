@@ -14,12 +14,13 @@ find_package(imgui CONFIG REQUIRED)
 
 if(WIN32)
   find_package(glad CONFIG REQUIRED)
+else()
+  add_compile_definitions(GL_GLEXT_PROTOTYPES)
 endif()
 
-add_executable(CoffeeGL main.cpp)
+add_executable(CoffeeGL main.cpp DeltaTime.cpp Shader.cpp)
 
 add_compile_definitions(GLM_FORCE_RADIANS)
-# add_compile_definitions(GL_GLEXT_PROTOTYPES)
 
 if(OPENGL_FOUND)
   message(STATUS "OpenGL Libs: ${OPENGL_LIBRARIES}\nOpenGL Include Dirs: ${OPENGL_INCLUDE_DIR}")

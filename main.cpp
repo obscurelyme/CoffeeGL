@@ -9,6 +9,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 #include <iostream>
+#include "DeltaTime.hpp"
 
 bool quit = false;
 SDL_Event gEvent{};
@@ -86,9 +87,13 @@ int main(int, char **) {
 
   Triangle tri;
 
+  int nrAttributes;
+  glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+  std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+
   while (!quit) {
     while (SDL_PollEvent(&gEvent)) {
-      ImGui_ImplSDL2_ProcessEvent(&gEvent);
+      // ImGui_ImplSDL2_ProcessEvent(&gEvent);
 
       if (gEvent.type == SDL_QUIT) {
         quit = true;
@@ -116,27 +121,31 @@ int main(int, char **) {
                     << std::endl;
         }
       }
-
-      ImGui_ImplOpenGL3_NewFrame();
-      ImGui_ImplSDL2_NewFrame();
-      ImGui::NewFrame();
-
-      ImGui::ShowDemoWindow();
-
-      ImGui::Render();
-
-      glViewport(0, 0, viewportWidth, viewportHeight);
-      glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT);
-
-      tri.Draw();
-
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-      SDL_GL_SwapWindow(gWindow);
-
-      SDL_Delay(16);
     }
+
+    CoffeeMaker::DeltaTime::CurrentTime = SDL_GetTicks();
+    CoffeeMaker::DeltaTime::SetDelta();
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+
+    tri.OnGui();
+
+    // ImGui::ShowDemoWindow();
+
+    ImGui::Render();
+
+    glViewport(0, 0, viewportWidth, viewportHeight);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    tri.Draw();
+
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    SDL_GL_SwapWindow(gWindow);
+    CoffeeMaker::DeltaTime::PreviousTime = CoffeeMaker::DeltaTime::CurrentTime;
   }
 
   ImGui_ImplOpenGL3_Shutdown();
