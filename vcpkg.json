@@ -5,6 +5,10 @@
     "fmt",
     "glm",
     {
+      "name": "glad",
+      "platform": "windows"
+    },
+    {
       "name": "sdl2",
       "platform": "windows | osx"
     },

@@ -1,8 +1,6 @@
 #ifndef _triangle_hpp
 #define _triangle_hpp
 
-#include <SDL2/SDL_opengl.h>
-#include <SDL2/SDL_opengl_glext.h>
 #include <iostream>
 #include <vector>
 
@@ -97,11 +95,11 @@ public:
     glDrawArrays(GL_TRIANGLES, 0, 3);
   }
 
-  GLuint vertexArrayObject{0};
-  GLuint vertexBufferObject{0};
-  GLuint vertexShader{0};
-  GLuint fragmentShader{0};
-  GLuint shaderProgram{0};
+  GLuint vertexArrayObject;
+  GLuint vertexBufferObject;
+  GLuint vertexShader;
+  GLuint fragmentShader;
+  GLuint shaderProgram;
   std::vector<float> vertices{-0.5f, -0.5f, 0.0f, 0.5f, -0.5f,
                               0.0f,  0.0f,  0.5f, 0.0f};
 };

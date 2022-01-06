@@ -1,6 +1,9 @@
-#include "Triangle.hpp"
+#ifdef COFFEEMAKER_OS_WIN32
+  #include <glad/glad.h>
+#endif
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+
+#include "Triangle.hpp"
 #include <fmt/core.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
@@ -52,6 +55,10 @@ int main(int, char **) {
               << std::endl;
     return 1;
   }
+
+  #ifdef COFFEEMAKER_OS_WIN32
+    gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+  #endif
 
   // NOTE: enable V-Sync
   if (SDL_GL_SetSwapInterval(1) != 0) {
