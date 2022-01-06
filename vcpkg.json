@@ -17,7 +17,7 @@
     {
       "name": "imgui",
       "default-features": false,
-      "features": ["sdl2-binding"]
+      "features": ["sdl2-binding", "opengl3-binding"]
     }
   ],
   "builtin-baseline": "b3cfaaf1bba70febd07c2f672ae590dc5d914180"

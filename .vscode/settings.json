@@ -1,7 +1,9 @@
 {
   "files.associations": {
     "*.tsx": "typescriptreact",
-    "*.tbd": "cpp"
+    "*.tbd": "cpp",
+    "__locale": "cpp",
+    "ios": "cpp"
   },
   "cmake.configureSettings": {
     "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake"
