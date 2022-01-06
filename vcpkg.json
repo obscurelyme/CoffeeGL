@@ -21,7 +21,7 @@
     {
       "name": "imgui",
       "default-features": false,
-      "features": ["sdl2-binding", "opengl3-binding"]
+      "features": ["sdl2-binding", "opengl3-binding", "docking-experimental"]
     },
     "stb"
   ],

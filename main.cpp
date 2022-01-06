@@ -10,6 +10,8 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 #include <iostream>
+#include "DeltaTime.hpp"
+#include "Editor/DockableWindow.hpp"
 
 bool quit = false;
 SDL_Event gEvent{};
@@ -72,6 +74,10 @@ int main(int, char **) {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+  io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
   ImFont *robotoFont{nullptr};
   robotoFont = io.Fonts->AddFontFromFileTTF(
       fmt::format("{}{}", SDL_GetBasePath(), "/assets/fonts/Roboto.ttf")
@@ -127,23 +133,19 @@ int main(int, char **) {
     CoffeeMaker::DeltaTime::CurrentTime = SDL_GetTicks();
     CoffeeMaker::DeltaTime::SetDelta();
 
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-
-    tri.OnGui();
-
-    // ImGui::ShowDemoWindow();
-
-    ImGui::Render();
-
     glViewport(0, 0, viewportWidth, viewportHeight);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    Editor::DockableWindow::PreRender();
+
+    tri.OnGui();
+
+    Editor::DockableWindow::Render();
+
     tri.Draw();
 
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    Editor::DockableWindow::PostRender();
 
     SDL_GL_SwapWindow(gWindow);
     CoffeeMaker::DeltaTime::PreviousTime = CoffeeMaker::DeltaTime::CurrentTime;
