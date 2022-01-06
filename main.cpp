@@ -1,15 +1,15 @@
 #ifdef COFFEEMAKER_OS_WIN32
-  #include <glad/glad.h>
+#include <glad/glad.h>
 #endif
 #include <SDL2/SDL.h>
 
+#include "DeltaTime.hpp"
 #include "Triangle.hpp"
 #include <fmt/core.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 #include <iostream>
-#include "DeltaTime.hpp"
 
 bool quit = false;
 SDL_Event gEvent{};
@@ -57,9 +57,9 @@ int main(int, char **) {
     return 1;
   }
 
-  #ifdef COFFEEMAKER_OS_WIN32
-    gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
-  #endif
+#ifdef COFFEEMAKER_OS_WIN32
+  gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+#endif
 
   // NOTE: enable V-Sync
   if (SDL_GL_SetSwapInterval(1) != 0) {
@@ -89,7 +89,8 @@ int main(int, char **) {
 
   int nrAttributes;
   glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-  std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+  std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes
+            << std::endl;
 
   while (!quit) {
     while (SDL_PollEvent(&gEvent)) {
