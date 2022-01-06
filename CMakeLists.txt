@@ -11,6 +11,7 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
+find_path(STB_INCLUDE_DIRS "stb.h")
 
 if(WIN32)
   find_package(glad CONFIG REQUIRED)
@@ -41,7 +42,7 @@ target_link_libraries(CoffeeGL PRIVATE
   glm::glm
   imgui::imgui
 )
-target_include_directories(CoffeeGL PRIVATE include)
+target_include_directories(CoffeeGL PRIVATE include ${STB_INCLUDE_DIRS})
 
 if(APPLE)
   add_compile_definitions(COFFEEMAKER_OS_APPLE)
