@@ -12,6 +12,7 @@ find_package(glm CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_path(STB_INCLUDE_DIRS "stb.h")
+find_package(tinyfiledialogs CONFIG REQUIRED)
 
 if(WIN32)
   find_package(glad CONFIG REQUIRED)
@@ -42,6 +43,7 @@ target_link_libraries(CoffeeGL PRIVATE
   fmt::fmt-header-only
   glm::glm
   imgui::imgui
+  tinyfiledialogs::tinyfiledialogs
 )
 target_include_directories(CoffeeGL PRIVATE include ${STB_INCLUDE_DIRS})
 

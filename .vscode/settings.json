@@ -1,7 +1,7 @@
 {
   "files.associations": {
-    "*.tsx": "typescriptreact",
     "*.cpp": "cpp",
+    "*.tsx": "typescriptreact",
     "*.tbd": "cpp",
     "__locale": "cpp",
     "ios": "cpp",
@@ -86,7 +86,14 @@
     "stack": "cpp",
     "string_view": "cpp",
     "unordered_map": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "charconv": "cpp",
+    "format": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "map": "cpp",
+    "xhash": "cpp",
+    "xtree": "cpp"
   },
   "cmake.configureSettings": {
     "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake"

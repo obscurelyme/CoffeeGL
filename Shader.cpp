@@ -5,9 +5,20 @@
 #include <sstream>
 #include <string>
 
-CoffeeGL::ShaderProgram::ShaderProgram(const std::string& vertexShaderPath, const std::string& fragmentShaderPath) {
-  std::string fullFilePathVertex = fmt::format("{}{}", SDL_GetBasePath(), vertexShaderPath);
-  std::string fullFilePathFragment = fmt::format("{}{}", SDL_GetBasePath(), fragmentShaderPath);
+CoffeeGL::ShaderProgram::ShaderProgram(const std::string& vertexShaderPath, const std::string& fragmentShaderPath, bool absolutePath) {
+  std::string fullFilePathVertex;
+  std::string fullFilePathFragment;
+
+  if (!absolutePath) {
+    fullFilePathVertex = fmt::format("{}{}", SDL_GetBasePath(), vertexShaderPath);
+    fullFilePathFragment = fmt::format("{}{}", SDL_GetBasePath(), fragmentShaderPath);
+  } else {
+    fullFilePathVertex = vertexShaderPath;
+    fullFilePathFragment = fragmentShaderPath;
+  }
+
+  VertexShaderFilePath = fullFilePathVertex;
+  FragmentShaderFilePath = fullFilePathFragment;
 
   std::ifstream vertexShaderfile;
   std::ifstream fragmentShaderfile;
@@ -42,7 +53,13 @@ CoffeeGL::ShaderProgram::ShaderProgram(const std::string& vertexShaderPath, cons
   Link();
 }
 
-CoffeeGL::ShaderProgram::~ShaderProgram() {}
+CoffeeGL::ShaderProgram::~ShaderProgram() {
+  glDeleteProgram(ShaderProgramID);
+}
+
+void CoffeeGL::ShaderProgram::Load() { 
+
+}
 
 void CoffeeGL::ShaderProgram::Use() {
   glUseProgram(ShaderProgramID);

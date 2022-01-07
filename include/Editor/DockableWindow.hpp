@@ -36,6 +36,15 @@ namespace Editor {
       ImGuiID dockSpaceId = ImGui::GetID("InvisibleWindowDockSpace");
 
       ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+      if (ImGui::BeginMainMenuBar()) {
+        if (ImGui::BeginMenu("File")) {
+          ImGui::MenuItem("Quit", "Ctrl+Q");
+          ImGui::EndMenu();
+        }
+        ImGui::EndMainMenuBar();
+      }   
+        
       ImGui::End();
     }
 

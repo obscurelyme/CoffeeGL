@@ -17,11 +17,12 @@ namespace CoffeeGL {
 class ShaderProgram {
 public:
   ShaderProgram(const std::string &vertexShaderPath,
-                const std::string &fragmentShaderPath);
+                const std::string &fragmentShaderPath, bool absolutePath = false);
   ~ShaderProgram();
 
   GLuint ShaderProgramID;
 
+  void Load();
   void Use();
   void SetBool(const std::string &uniformName, bool value);
   void SetInt(const std::string &uniformName, int value);
@@ -34,6 +35,9 @@ public:
 
   std::string vertexShaderSource;
   std::string fragmentShaderSource;
+
+  std::string VertexShaderFilePath;
+  std::string FragmentShaderFilePath;
 
 private:
   void Compile();

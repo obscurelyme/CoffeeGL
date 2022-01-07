@@ -95,14 +95,9 @@ int main(int, char **) {
   Triangle tri2;
   Rectangle rect;
 
-  int nrAttributes;
-  glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-  std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes
-            << std::endl;
-
   while (!quit) {
     while (SDL_PollEvent(&gEvent)) {
-      // ImGui_ImplSDL2_ProcessEvent(&gEvent);
+      ImGui_ImplSDL2_ProcessEvent(&gEvent);
 
       if (gEvent.type == SDL_QUIT) {
         quit = true;
@@ -141,13 +136,16 @@ int main(int, char **) {
 
     Editor::DockableWindow::PreRender();
 
-    Triangle::UI();
+    // Triangle::UI();
+    rect.OnGui();
+
+    // ImGui::ShowDemoWindow();
 
     Editor::DockableWindow::Render();
 
-    tri.Draw();
-    tri2.Draw();
-    // rect.Draw();
+    // tri.Draw();
+    // tri2.Draw();
+    rect.Draw();
 
     Editor::DockableWindow::PostRender();
 
