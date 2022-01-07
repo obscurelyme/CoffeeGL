@@ -26,6 +26,8 @@ public:
   void SetBool(const std::string &uniformName, bool value);
   void SetInt(const std::string &uniformName, int value);
   void SetFloat(const std::string &uniformName, float value);
+  void SetFloat(const std::string& uniformName, float xValue, float yValue);
+  void SetFloat(const std::string& uniformName, float xValue, float yValue, float zValue);
 
   GLuint vertexShader;
   GLuint fragmentShader;
@@ -36,6 +38,7 @@ public:
 private:
   void Compile();
   void Link();
+  void UniformError(const std::string &uniformName);
 };
 
 } // namespace CoffeeGL

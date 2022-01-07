@@ -2,12 +2,13 @@
 
 layout(location = 0) in vec3 aPos;
 layout(location = 1) in vec3 aColor;
+
 out vec3 customColor;
 
-uniform float xOffset;
-uniform float yOffset;
+uniform vec2 offset;
 
 void main() {
-  gl_Position = vec4(aPos.x + xOffset, aPos.y + yOffset, aPos.z, 1.0);
+  vec3 calcPos = aPos + vec3(offset, 1.0f);
+  gl_Position = vec4(calcPos, 1.0);
   customColor = aColor;
 }

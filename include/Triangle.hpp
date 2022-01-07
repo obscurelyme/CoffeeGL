@@ -22,7 +22,7 @@ public:
       glGenBuffers(1, &vertexBufferObject);
 
       shaderProg =
-          new CoffeeGL::ShaderProgram("assets/shaders/hello-tri-color.vert",
+          new CoffeeGL::ShaderProgram("assets/shaders/hello-tri-uniform.vert",
                                       "assets/shaders/hello-tri-color.frag");
 
       vertices.resize(3);
@@ -83,15 +83,9 @@ public:
   }
 
   void Draw() {
-    // float timeValue = SDL_GetTicks() * 0.0016f;
-    // float greenValue = sin(static_cast<float>(timeValue)) / 2 + 0.5f;
-    // std::cout << CoffeeMaker::DeltaTime::Value() << " " << greenValue <<
-    // std::endl; int vertexColorLocation = glGetUniformLocation(shaderProgram,
-    // "customColor");
 
     shaderProg->Use();
-    shaderProg->SetFloat("xOffset", xOffset);
-    shaderProg->SetFloat("yOffset", yOffset);
+    shaderProg->SetFloat("offset", xOffset, yOffset);
 
     glBindVertexArray(vertexArrayObject);
     glDrawArrays(GL_TRIANGLES, 0, 3);

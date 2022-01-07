@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <sstream>
+#include <string>
 
 CoffeeGL::ShaderProgram::ShaderProgram(const std::string& vertexShaderPath, const std::string& fragmentShaderPath) {
   std::string fullFilePathVertex = fmt::format("{}{}", SDL_GetBasePath(), vertexShaderPath);
@@ -49,17 +50,42 @@ void CoffeeGL::ShaderProgram::Use() {
 
 void CoffeeGL::ShaderProgram::SetBool(const std::string& uniformName, bool value) {
   GLint uniformLocation = glGetUniformLocation(ShaderProgramID, uniformName.c_str());
+  if (uniformLocation == -1) {
+    UniformError(uniformName);
+  }
   glUniform1i(uniformLocation, value);
 }
 
 void CoffeeGL::ShaderProgram::SetInt(const std::string& uniformName, int value) {
   GLint uniformLocation = glGetUniformLocation(ShaderProgramID, uniformName.c_str());
+  if (uniformLocation == -1) {
+    UniformError(uniformName);
+  }
   glUniform1i(uniformLocation, value);
 }
 
 void CoffeeGL::ShaderProgram::SetFloat(const std::string& uniformName, float value) {
   GLint uniformLocation = glGetUniformLocation(ShaderProgramID, uniformName.c_str());
+  if (uniformLocation == -1) {
+    UniformError(uniformName);
+  }
   glUniform1f(uniformLocation, value);
+}
+
+void CoffeeGL::ShaderProgram::SetFloat(const std::string& uniformName, float xValue, float yValue) {
+  GLint uniformLocation = glGetUniformLocation(ShaderProgramID, uniformName.c_str());
+  if (uniformLocation == -1) {
+    UniformError(uniformName);
+  }
+  glUniform2f(uniformLocation, xValue, yValue);
+}
+
+void CoffeeGL::ShaderProgram::SetFloat(const std::string& uniformName, float xValue, float yValue, float zValue) {
+  GLint uniformLocation = glGetUniformLocation(ShaderProgramID, uniformName.c_str());
+  if (uniformLocation == -1) {
+    UniformError(uniformName);
+  }
+  glUniform3f(uniformLocation, xValue, yValue, zValue);
 }
 
 void CoffeeGL::ShaderProgram::Compile() {
@@ -109,4 +135,9 @@ void CoffeeGL::ShaderProgram::Link() {
   // no longer need shaders anymore after linking
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
+}
+
+void CoffeeGL::ShaderProgram::UniformError(const std::string &uniformName) {
+  std::string msg = fmt::format("[GLSL VALIDATION ERROR]: uniform named \"{}\" does not exist within shader program.", uniformName);
+  std::cerr << msg << std::endl;
 }
