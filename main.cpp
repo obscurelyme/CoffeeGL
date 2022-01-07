@@ -4,14 +4,14 @@
 #include <SDL2/SDL.h>
 
 #include "DeltaTime.hpp"
+#include "Editor/DockableWindow.hpp"
+#include "Rectangle.hpp"
 #include "Triangle.hpp"
 #include <fmt/core.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 #include <iostream>
-#include "DeltaTime.hpp"
-#include "Editor/DockableWindow.hpp"
 
 bool quit = false;
 SDL_Event gEvent{};
@@ -92,6 +92,8 @@ int main(int, char **) {
   ImGui_ImplOpenGL3_Init(glsl_version);
 
   Triangle tri;
+  Triangle tri2;
+  Rectangle rect;
 
   int nrAttributes;
   glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
@@ -139,11 +141,13 @@ int main(int, char **) {
 
     Editor::DockableWindow::PreRender();
 
-    tri.OnGui();
+    Triangle::UI();
 
     Editor::DockableWindow::Render();
 
     tri.Draw();
+    tri2.Draw();
+    // rect.Draw();
 
     Editor::DockableWindow::PostRender();
 

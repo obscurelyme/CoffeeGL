@@ -19,7 +19,7 @@ else()
   add_compile_definitions(GL_GLEXT_PROTOTYPES)
 endif()
 
-add_executable(CoffeeGL main.cpp DeltaTime.cpp Shader.cpp)
+add_executable(CoffeeGL main.cpp DeltaTime.cpp Shader.cpp Image.cpp Triangle.cpp)
 
 add_compile_definitions(GLM_FORCE_RADIANS)
 
