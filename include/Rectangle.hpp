@@ -9,6 +9,7 @@
 #include <string>
 #include <tinyfiledialogs/tinyfiledialogs.h>
 #include <array>
+#include "DeltaTime.hpp"
 
 class Rectangle {
 public:
@@ -65,6 +66,12 @@ public:
     ImGui::Begin(windowName.c_str());
 
     ImGui::SliderFloat("Texture Scale", &texScale, 1.0f, 10.0f);
+    ImGui::SliderFloat("Texture xOffset", &xTexOffset, -10.0f, 10.0f);
+    ImGui::SliderFloat("Texture yOffset", &yTexOffset, -10.0f, 10.0f);
+    ImGui::InputFloat("Texture scroll speed", &scrollSpeed, 1.0f, 10.0f, "%.2f");
+
+    ImGui::Checkbox("Y scrolling", &yScroll);
+    ImGui::Checkbox("X scrolling", &xScroll);
 
     if (ImGui::BeginMenu("Shader Selection")) {
       if (ImGui::MenuItem("Vertex")) {
@@ -100,11 +107,21 @@ public:
     ImGui::End();
   }
 
-  void Draw() {
+  void Draw() {    
     shaderProg->Use();
     // shaderProg->SetFloat("xOffset", 0.0f);
     // shaderProg->SetFloat("yOffset", 0.0f);
     shaderProg->SetFloat("texScale", texScale);
+    if (xScroll) {
+      position.x += scrollSpeed * CoffeeMaker::DeltaTime::Value();
+      shaderProg->SetFloat("xTexOffset", position.x);
+    }
+    
+    if (yScroll) {
+      position.y += scrollSpeed * CoffeeMaker::DeltaTime::Value();
+      shaderProg->SetFloat("yTexOffset", position.y);
+    }
+    
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -146,6 +163,12 @@ public:
   CoffeeGL::ShaderProgram *shaderProg;
   Image* img;
   float texScale{1.0f};
+  float xTexOffset{0.0f};
+  float yTexOffset{0.0f};
+  float scrollSpeed{50.0f};
+  bool xScroll{false};
+  bool yScroll{false};
+  glm::vec2 position{0.0f};
   std::string imageFile{"assets/images/wall.jpeg"};
 };
 
